@@ -1,10 +1,12 @@
 import sys
 import pandas as pd
 import numpy as np
+import re
 from sklearn.pipeline import Pipeline,FeatureUnion
 from sqlalchemy import create_engine
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from nltk.corpus import stopwords
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.multioutput import MultiOutputClassifier
@@ -14,7 +16,7 @@ from sklearn.metrics import make_scorer
 from sklearn.model_selection import GridSearchCV
 import pickle
 import nltk
-nltk.download(['punkt', 'wordnet'])
+nltk.download(['punkt', 'wordnet','stopwords'])
 
 def load_data(database_filepath):
     """
@@ -43,13 +45,18 @@ def tokenize(text):
     Returns:
         clean_tokens: array of clean tokens (str)
     """
+    # normalize case and remove punctuation
+    text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
+    
+    # tokenize text
     tokens = word_tokenize(text)
+    
+    # lemmatize and remove stop words
+    stop_words = stopwords.words("english")
     lemmatizer = WordNetLemmatizer()
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
-    return clean_tokens
+    tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stop_words]  
+    return tokens
+
 
 
 def build_model():

@@ -41,16 +41,10 @@ def clean_data(df):
     categories.columns = category_colnames
     for column in categories:
         # set each value to be the last character of the string
-        categories[column] = categories[column].apply(lambda x: x.split('-')[1])
+        categories[column] = categories[column].apply(lambda x: x.split('-')[1] if int(x.split('-')[1]) < 2 else 1)
         # convert column from string to numeric
         categories[column] = categories[column].astype(str)
-    
-    dummy_related = pd.get_dummies(categories['related'])
-    dummy_related.columns=['related_0','related_1','related_2']
-    dummy_related = dummy_related.astype(str)
-    categories=categories.join(dummy_related)
-    categories.drop('related',axis=1,inplace=True)
-    #categories.head()
+
     # drop the original categories column from `df`
     df.drop('categories',axis=1,inplace=True)
     # concatenate the original dataframe with the new `categories` dataframe
