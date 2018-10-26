@@ -26,7 +26,7 @@ The web app will also display visualizations of the data.
 
 data/process_data.py: The ETL pipeline used to process data for model building.
 
-models/train_classifier.py: The Machine Learning pipeline used to fit, tune, evaluate, and export the model to a Python pickle 
+models/train_classifier.py: The Machine Learning pipeline used to fit, tune, evaluate, and export the model to a Python pickle (not uploaded due to Github size limitation)
 
 app/templates/*.html: HTML templates for the web app.
 
