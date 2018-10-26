@@ -1,5 +1,7 @@
 # Project Overview
 A data science project that analyzed disaster data from Figure Eight to build a machine learning model that classifies disaster messages.
+<img src="/docs/dr.png" alt="screenshot"/>
+
 
 A machine learning pipeline is created to categorize events and requests during disaster so that the one can send the messages to an appropriate disaster relief agency.
 
